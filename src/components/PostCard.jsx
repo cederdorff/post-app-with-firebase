@@ -1,8 +1,6 @@
 import UserAvatar from "./UserAvatar";
 
 export default function PostCard({ post }) {
-  console.log(post);
-
   return (
     <article key={post.id} className="post-card">
       <UserAvatar uid={post.uid} />
