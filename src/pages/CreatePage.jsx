@@ -44,7 +44,7 @@ export default function CreatePage() {
             type="url"
             value={image}
             aria-label="image"
-            placeholder="Past an image url..."
+            placeholder="Paste an image url..."
             onChange={e => setImage(e.target.value)}
           />
           <label htmlFor="image-preview"></label>
