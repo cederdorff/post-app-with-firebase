@@ -307,12 +307,12 @@ nav a.active {
   border-radius: 50%;
 }
 
-/* ---------- User Page Styling ---------- */
-#user-page .post-card > img {
+/* ---------- Post Page Styling ---------- */
+#post-page .post-card > img {
   height: auto;
 }
 
-#user-page .btns {
+#post-page .btns {
   padding: 1em 0;
 }
 
