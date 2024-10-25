@@ -23,13 +23,33 @@ export default function PostDetailPage() {
     navigate(`/posts/${params.id}/update`);
   }
 
+  async function handleDelete() {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+
+    if (shouldDelete) {
+      const response = await fetch(url, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        navigate("/");
+      } else {
+        alert("Something went wrong");
+      }
+    }
+  }
+
   return (
     <section className="page" id="post-page">
       <div className="container">
         <h1>{post.caption}</h1>
         <PostCard post={post} />
         <div className="btns">
-          <button className="btn-cancel">Delete post</button>
+          <button className="btn-cancel" onClick={handleDelete}>
+            Delete post
+          </button>
           <button onClick={navigateToUpdate}>Update post</button>
         </div>
       </div>
