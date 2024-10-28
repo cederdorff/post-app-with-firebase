@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function UserAvatar({ uid }) {
-  const [user, setUser] = useState({
-    image: "https://placehold.co/50x50.webp",
-    name: "User's Name",
-    title: "User's Title"
-  }); // set the initial state with a placeholder image, name, and title
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     async function getUser() {

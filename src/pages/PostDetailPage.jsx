@@ -12,12 +12,12 @@ export default function PostDetailPage() {
     async function getPost() {
       const response = await fetch(url);
       const postData = await response.json();
-      console.log(postData);
+      postData.id = params.id;
       setPost(postData);
     }
 
     getPost();
-  }, [url]);
+  }, [params.id, url]);
 
   function navigateToUpdate() {
     navigate(`/posts/${params.id}/update`);
