@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (post?.caption && post?.image) {
@@ -15,6 +16,12 @@ export default function PostForm({ savePost, post }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (!caption || !image) {
+      setErrorMessage("Please fill out both caption and image.");
+      return;
+    }
+
     const formData = { caption, image };
     // ... send formData to API or parent component
     savePost(formData); // <-- pass formData to parent component
@@ -55,6 +62,11 @@ export default function PostForm({ savePost, post }) {
             "https://placehold.co/600x400?text=Error+loading+image")
         }
       />
+
+      <div className="error-message">
+        <p>{errorMessage}</p>
+      </div>
+
       <div className="btns">
         <button>{post ? "Update Post" : "Create Post"}</button>
       </div>
