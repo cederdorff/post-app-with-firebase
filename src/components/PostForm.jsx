@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
@@ -6,6 +6,8 @@ export default function PostForm({ savePost, post }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isCaptionError, setIsCaptionError] = useState(false);
   const [isImageError, setIsImageError] = useState(false);
+
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (post?.caption && post?.image) {
@@ -32,8 +34,8 @@ export default function PostForm({ savePost, post }) {
       return;
     }
 
-    if (!image.includes("http")) {
-      setErrorMessage("Please enter a valid image URL.");
+    if (!image) {
+      setErrorMessage("Please choose an image.");
       setIsImageError(true);
       return;
     }
@@ -46,6 +48,28 @@ export default function PostForm({ savePost, post }) {
     const formData = { caption, image };
     // ... send formData to API or parent component
     savePost(formData); // <-- pass formData to parent component
+  }
+
+  /**
+   * handleImageChange is called every time the user chooses an image in the fire system.
+   * The event is fired by the input file field in the form
+   */
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file.size < 500000) {
+      // image file size must be below 0,5MB
+      const reader = new FileReader();
+      reader.onload = event => {
+        setImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+      setErrorMessage(""); // reset errorMessage state
+      setIsImageError(false); // reset isImageError state
+    } else {
+      // if not below 0.5MB display an error message using the errorMessage state
+      setErrorMessage("The image file is too big!");
+      setIsImageError(true); // set isImageError to true
+    }
   }
 
   return (
@@ -63,27 +87,26 @@ export default function PostForm({ savePost, post }) {
       />
       <label htmlFor="image-url">Image</label>
       <input
-        id="image-url"
-        name="image-url"
-        type="url"
-        value={image}
-        aria-label="image"
-        placeholder="Paste an image url..."
-        onChange={e => setImage(e.target.value)}
-        className={isImageError ? "error" : ""}
+        type="file"
+        className="hide"
+        accept="image/*"
+        onChange={handleImageChange}
+        ref={fileInputRef}
       />
-      <label htmlFor="image-preview"></label>
       <img
-        id="image-preview"
-        className="image-preview"
+        id="image"
+        className={isImageError ? "error image-preview" : "image-preview"}
         src={
-          image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"
+          image
+            ? image
+            : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
         }
         alt="Choose"
         onError={e =>
           (e.target.src =
             "https://placehold.co/600x400?text=Error+loading+image")
         }
+        onClick={() => fileInputRef.current.click()}
       />
 
       <div className="error-message">

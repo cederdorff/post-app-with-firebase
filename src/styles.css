@@ -116,7 +116,7 @@ input {
   border: 2px solid #fff;
 }
 
-input.error {
+.error {
   border: 2px solid var(--text-color-danger);
 }
 
