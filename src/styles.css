@@ -63,8 +63,8 @@ button,
 select {
   font-size: 1rem;
   font-family: inherit;
-  border: none;
   border-radius: 8px;
+  border: none;
   padding: 1rem;
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
   background-color: white;
@@ -110,6 +110,14 @@ form[action$="destroy"] button:hover,
 .btn-delete:hover {
   background-color: #f44250;
   color: var(--white);
+}
+
+input {
+  border: 2px solid #fff;
+}
+
+input.error {
+  border: 2px solid var(--text-color-danger);
 }
 
 /* ---------- Form Specific Styling ---------- */
