@@ -12,7 +12,6 @@ export default function UpdatePage() {
     async function getPost() {
       const response = await fetch(url);
       const postData = await response.json();
-      console.log(postData);
       setCaption(postData.caption);
       setImage(postData.image);
     }

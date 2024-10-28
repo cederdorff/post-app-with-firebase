@@ -20,6 +20,8 @@ export default function CreatePage() {
 
     if (response.ok) {
       navigate("/");
+    } else {
+      console.error("Error creating post");
     }
   }
 
