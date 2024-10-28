@@ -20,10 +20,13 @@ export default function UserAvatar({ uid }) {
 
   return (
     <div className="avatar">
-      <img src={user.image} alt={user.id} />
+      <img
+        src={user?.image || "https://placehold.co/50x50.webp"}
+        alt={user?.name}
+      />
       <span>
-        <h3>{user.name}</h3>
-        <p>{user.title}</p>
+        <h3>{user?.name}</h3>
+        <p>{user?.title}</p>
       </span>
     </div>
   );
