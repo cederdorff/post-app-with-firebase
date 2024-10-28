@@ -5,7 +5,7 @@ import PostCard from "./../components/PostCard";
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
   const params = useParams();
-  const url = `https://react-user-crud-app-default-rtdb.firebaseio.com/posts/${params.id}.json`;
+  const url = `https://fb-rest-race-default-rtdb.firebaseio.com/posts/${params.id}.json`;
   const navigate = useNavigate();
 
   useEffect(() => {

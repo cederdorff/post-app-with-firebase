@@ -8,7 +8,7 @@ export default function UserAvatar({ uid }) {
 
     async function getUser() {
       const response = await fetch(
-        `https://react-user-crud-app-default-rtdb.firebaseio.com/users/${uid}.json`
+        `https://fb-rest-race-default-rtdb.firebaseio.com/users/${uid}.json`
       );
       const data = await response.json();
       setUser(data); // set the user state with the data from firebase

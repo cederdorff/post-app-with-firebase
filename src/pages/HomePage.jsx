@@ -6,8 +6,7 @@ export default function HomePage() {
   // Fetch data from the API
   useEffect(() => {
     async function fetchPosts() {
-      const url =
-        "https://react-user-crud-app-default-rtdb.firebaseio.com/posts.json";
+      const url = "https://fb-rest-race-default-rtdb.firebaseio.com/posts.json";
       const response = await fetch(url);
       const data = await response.json(); // JSON.parse(response)
       console.log(data);
