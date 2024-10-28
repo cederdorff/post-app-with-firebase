@@ -19,7 +19,7 @@ export default function PostForm({ savePost, post }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!caption || !image) {
+    if (!caption && !image) {
       setErrorMessage("Please fill out both caption and image.");
       setIsCaptionError(true);
       setIsImageError(true);
