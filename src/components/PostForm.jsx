@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function PostForm({ savePost }) {
+export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
+
+  useEffect(() => {
+    if (post?.caption && post?.image) {
+      // if post, set the states with values from the post object.
+      // The post object is a prop, passed from UpdatePage
+      setCaption(post.caption);
+      setImage(post.image);
+    }
+  }, [post]); // useEffect is called every time post changes.
 
   function handleSubmit(event) {
     event.preventDefault();
