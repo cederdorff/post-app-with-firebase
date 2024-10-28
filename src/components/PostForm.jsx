@@ -4,6 +4,8 @@ export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isCaptionError, setIsCaptionError] = useState(false);
+  const [isImageError, setIsImageError] = useState(false);
 
   useEffect(() => {
     if (post?.caption && post?.image) {
@@ -19,8 +21,27 @@ export default function PostForm({ savePost, post }) {
 
     if (!caption || !image) {
       setErrorMessage("Please fill out both caption and image.");
+      setIsCaptionError(true);
+      setIsImageError(true);
       return;
     }
+
+    if (!caption) {
+      setErrorMessage("Please enter a caption.");
+      setIsCaptionError(true);
+      return;
+    }
+
+    if (!image.includes("http")) {
+      setErrorMessage("Please enter a valid image URL.");
+      setIsImageError(true);
+      return;
+    }
+
+    // if no errors, clear error message
+    setErrorMessage("");
+    setIsCaptionError(false);
+    setIsImageError(false);
 
     const formData = { caption, image };
     // ... send formData to API or parent component
@@ -38,6 +59,7 @@ export default function PostForm({ savePost, post }) {
         aria-label="caption"
         placeholder="Write a caption..."
         onChange={e => setCaption(e.target.value)}
+        className={isCaptionError ? "error" : ""}
       />
       <label htmlFor="image-url">Image</label>
       <input
@@ -48,6 +70,7 @@ export default function PostForm({ savePost, post }) {
         aria-label="image"
         placeholder="Paste an image url..."
         onChange={e => setImage(e.target.value)}
+        className={isImageError ? "error" : ""}
       />
       <label htmlFor="image-preview"></label>
       <img
