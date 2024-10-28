@@ -56,7 +56,7 @@ export default function PostForm({ savePost, post }) {
         }
       />
       <div className="btns">
-        <button>Save</button>
+        <button>{post ? "Update Post" : "Create Post"}</button>
       </div>
     </form>
   );
