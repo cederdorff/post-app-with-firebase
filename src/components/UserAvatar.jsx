@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function UserAvatar({ uid }) {
-  const [user, setUser] = useState({
-    image: "https://placehold.co/50x50.webp",
-    name: "User's Name",
-    title: "User's Title"
-  }); // set the initial state with a placeholder image, name, and title
+  const [user, setUser] = useState({}); // set the initial state to an empty object
 
   useEffect(() => {
     async function getUser() {
@@ -20,10 +16,13 @@ export default function UserAvatar({ uid }) {
 
   return (
     <div className="avatar">
-      <img src={user.image} alt={user.id} />
+      <img
+        src={user?.image || "https://placehold.co/50x50.webp"}
+        alt={user?.id}
+      />
       <span>
-        <h3>{user.name}</h3>
-        <p>{user.title}</p>
+        <h3>{user?.name}</h3>
+        <p>{user?.title}</p>
       </span>
     </div>
   );
