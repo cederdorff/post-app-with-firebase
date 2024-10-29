@@ -51,18 +51,15 @@ export default function PostForm({ savePost, post }) {
   }
 
   /**
-   * handleImageChange is called every time the user chooses an image in the fire system.
+   * handleImageChange is called every time the user chooses an image in the file system.
    * The event is fired by the input file field in the form
    */
-  function handleImageChange(event) {
-    const file = event.target.files[0];
+  async function handleImageChange(event) {
+    const file = event.target.files[0]; // get the first file in the array
     if (file.size < 500000) {
-      // image file size must be below 0,5MB
-      const reader = new FileReader();
-      reader.onload = event => {
-        setImage(event.target.result);
-      };
-      reader.readAsDataURL(file);
+      // if file size is below 0.5MB
+      const imageUrl = await uploadImage(file); // call the uploadImage function
+      setImage(imageUrl); // set the image state with the image URL
       setErrorMessage(""); // reset errorMessage state
       setIsImageError(false); // reset isImageError state
     } else {
@@ -70,6 +67,26 @@ export default function PostForm({ savePost, post }) {
       setErrorMessage("The image file is too big!");
       setIsImageError(true); // set isImageError to true
     }
+  }
+
+  async function uploadImage(imageFile) {
+    const firebaseProjectId = "fb-rest-race"; // replace with your own firebase project id
+    const url = `https://firebasestorage.googleapis.com/v0/b/${firebaseProjectId}.appspot.com/o/${imageFile.name}`;
+    // POST request to upload image
+    const response = await fetch(url, {
+      method: "POST",
+      body: imageFile,
+      headers: { "Content-Type": imageFile.type }
+    });
+
+    if (!response.ok) {
+      setErrorMessage("Upload image failed"); // set errorMessage state with error message
+      setIsImageError(true); // set isImageError to true
+      throw new Error("Upload image failed"); // throw an error
+    }
+
+    const imageUrl = `${url}?alt=media`; // get the image URL
+    return imageUrl; // return the image URL
   }
 
   return (
