@@ -4,6 +4,7 @@ import CreatePage from "./pages/CreatePage";
 import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import UpdatePage from "./pages/UpdatePage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
           <Route path="/posts/:id/update" element={<UpdatePage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
