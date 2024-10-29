@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Loader from "./Loader";
 
 export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
@@ -6,6 +7,7 @@ export default function PostForm({ savePost, post }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isCaptionError, setIsCaptionError] = useState(false);
   const [isImageError, setIsImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -55,6 +57,7 @@ export default function PostForm({ savePost, post }) {
    * The event is fired by the input file field in the form
    */
   async function handleImageChange(event) {
+    setIsLoading(true); // set isLoading state to true
     const file = event.target.files[0]; // get the first file in the array
     if (file.size < 500000) {
       // if file size is below 0.5MB
@@ -67,6 +70,7 @@ export default function PostForm({ savePost, post }) {
       setErrorMessage("The image file is too big!");
       setIsImageError(true); // set isImageError to true
     }
+    setTimeout(() => setIsLoading(false), 500); // set isLoading state to false after 500ms
   }
 
   async function uploadImage(imageFile) {
@@ -90,49 +94,52 @@ export default function PostForm({ savePost, post }) {
   }
 
   return (
-    <form className="form-grid" onSubmit={handleSubmit}>
-      <label htmlFor="caption">Caption</label>
-      <input
-        id="caption"
-        name="caption"
-        type="text"
-        value={caption}
-        aria-label="caption"
-        placeholder="Write a caption..."
-        onChange={e => setCaption(e.target.value)}
-        className={isCaptionError ? "error" : ""}
-      />
-      <label htmlFor="image-url">Image</label>
-      <input
-        type="file"
-        className="hide"
-        accept="image/*"
-        onChange={handleImageChange}
-        ref={fileInputRef}
-      />
-      <img
-        id="image"
-        className={isImageError ? "error image-preview" : "image-preview"}
-        src={
-          image
-            ? image
-            : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
-        }
-        alt="Choose"
-        onError={e =>
-          (e.target.src =
-            "https://placehold.co/600x400?text=Error+loading+image")
-        }
-        onClick={() => fileInputRef.current.click()}
-      />
+    <>
+      <form className="form-grid" onSubmit={handleSubmit}>
+        <label htmlFor="caption">Caption</label>
+        <input
+          id="caption"
+          name="caption"
+          type="text"
+          value={caption}
+          aria-label="caption"
+          placeholder="Write a caption..."
+          onChange={e => setCaption(e.target.value)}
+          className={isCaptionError ? "error" : ""}
+        />
+        <label htmlFor="image-url">Image</label>
+        <input
+          type="file"
+          className="hide"
+          accept="image/*"
+          onChange={handleImageChange}
+          ref={fileInputRef}
+        />
+        <img
+          id="image"
+          className={isImageError ? "error image-preview" : "image-preview"}
+          src={
+            image
+              ? image
+              : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
+          }
+          alt="Choose"
+          onError={e =>
+            (e.target.src =
+              "https://placehold.co/600x400?text=Error+loading+image")
+          }
+          onClick={() => fileInputRef.current.click()}
+        />
 
-      <div className="error-message">
-        <p>{errorMessage}</p>
-      </div>
+        <div className="error-message">
+          <p>{errorMessage}</p>
+        </div>
 
-      <div className="btns">
-        <button>{post ? "Update Post" : "Create Post"}</button>
-      </div>
-    </form>
+        <div className="btns">
+          <button>{post ? "Update Post" : "Create Post"}</button>
+        </div>
+      </form>
+      <Loader show={isLoading} />
+    </>
   );
 }
