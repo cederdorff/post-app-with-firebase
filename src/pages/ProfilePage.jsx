@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
+import UserPosts from "../components/UserPosts";
 
 export default function ProfilePage() {
   const [name, setName] = useState("");
@@ -159,6 +160,8 @@ export default function ProfilePage() {
           </button>
         </div>
       </div>
+      <h2>Posts</h2>
+      <UserPosts uid={auth.currentUser?.uid} />
     </section>
   );
 }
