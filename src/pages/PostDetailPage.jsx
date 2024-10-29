@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PostCard from "./../components/PostCard";
+import { auth } from "../firebase-config";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
@@ -46,12 +47,15 @@ export default function PostDetailPage() {
       <div className="container">
         <h1>{post.caption}</h1>
         <PostCard post={post} />
-        <div className="btns">
-          <button className="btn-cancel" onClick={handleDelete}>
-            Delete post
-          </button>
-          <button onClick={navigateToUpdate}>Update post</button>
-        </div>
+
+        {auth.currentUser?.uid === post.uid && (
+          <div className="btns">
+            <button className="btn-cancel" onClick={handleDelete}>
+              Delete post
+            </button>
+            <button onClick={navigateToUpdate}>Update post</button>
+          </div>
+        )}
       </div>
     </section>
   );

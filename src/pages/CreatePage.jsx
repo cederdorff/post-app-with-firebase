@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import PostForm from "../components/PostForm";
+import { auth } from "../firebase-config";
 export default function CreatePage() {
   const navigate = useNavigate();
 
   async function createPost(post) {
-    post.uid = "ZfPTVEMQKf9vhNiUh0bj";
+    post.uid = auth.currentUser.uid;
 
     const response = await fetch(
       "https://fb-rest-race-default-rtdb.firebaseio.com/posts.json",
