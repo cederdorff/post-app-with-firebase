@@ -9,7 +9,9 @@ export default function UserAvatar({ uid }) {
         `https://fb-rest-race-default-rtdb.firebaseio.com/users/${uid}.json`
       );
       const data = await response.json();
-      setUser(data); // set the user state with the data from firebase
+      if (data) {
+        setUser(data); // set the user state with the data from firebase
+      }
     }
     getUser(); // call the getUser function
   }, [uid]); // <--- "[id]" VERY IMPORTANT!!!
