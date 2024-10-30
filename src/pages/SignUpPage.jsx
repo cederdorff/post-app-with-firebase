@@ -18,7 +18,7 @@ export default function SignUpPage() {
       .then(userCredential => {
         // Created and signed in
         const user = userCredential.user;
-        createUser(user.uid, name, mail);
+        createUser(user.uid, name, mail); // creating a new user in the database
       })
       .catch(error => {
         let code = error.code; // saving error code in variable
