@@ -6,7 +6,7 @@ export default function UserPosts({ uid }) {
 
   useEffect(() => {
     async function getPosts() {
-      const url = `https://fb-rest-race-default-rtdb.firebaseio.com/posts.json?orderBy="uid"&equalTo="${uid}"`;
+      const url = `${import.meta.env.VITE_FB_URL}/posts.json?orderBy="uid"&equalTo="${uid}"`;
       // To make this work, you must create an index on "uid" in Firebase Realtime Database Rules
       const response = await fetch(url);
       const data = await response.json();
@@ -22,11 +22,7 @@ export default function UserPosts({ uid }) {
   }, [uid]);
   return (
     <section className="grid">
-      {posts.length ? (
-        posts.map(post => <PostCard post={post} key={post.id} />)
-      ) : (
-        <p>No posts yet</p>
-      )}
+      {posts.length ? posts.map(post => <PostCard post={post} key={post.id} />) : <p>No posts yet</p>}
     </section>
   );
 }

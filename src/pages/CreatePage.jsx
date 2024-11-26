@@ -7,13 +7,10 @@ export default function CreatePage() {
   async function createPost(post) {
     post.uid = auth.currentUser.uid;
 
-    const response = await fetch(
-      "https://fb-rest-race-default-rtdb.firebaseio.com/posts.json",
-      {
-        method: "POST",
-        body: JSON.stringify(post)
-      }
-    );
+    const response = await fetch(`${import.meta.env.VITE_FB_URL}/posts.json`, {
+      method: "POST",
+      body: JSON.stringify(post)
+    });
 
     if (response.ok) {
       navigate("/");
