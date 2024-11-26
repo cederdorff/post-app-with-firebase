@@ -7,9 +7,7 @@ export default function HomePage() {
   // Fetch data from the API
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch(
-        "https://fb-rest-race-default-rtdb.firebaseio.com/posts.json"
-      ); // fetch data from the url
+      const response = await fetch(`${import.meta.env.VITE_FB_URL}/posts.json`); // fetch data from the url
       const data = await response.json(); // get the data from the response and parse it
       // from object to array
       const postsArray = Object.keys(data).map(postId => ({

@@ -6,7 +6,7 @@ export default function UserAvatar({ uid }) {
   useEffect(() => {
     async function getUser() {
       const response = await fetch(
-        `https://fb-rest-race-default-rtdb.firebaseio.com/users/${uid}.json`
+        `${import.meta.env.VITE_FB_URL}/users/${uid}.json`
       );
       const data = await response.json();
       if (data) {

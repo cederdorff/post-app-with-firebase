@@ -30,7 +30,7 @@ export default function SignUpPage() {
   }
 
   async function createUser(uid, name, mail) {
-    const url = `https://fb-rest-race-default-rtdb.firebaseio.com/users/${uid}.json`;
+    const url = `${import.meta.env.VITE_FB_URL}/users/${uid}.json`;
     const response = await fetch(url, {
       method: "PUT",
       body: JSON.stringify({ name, mail })
@@ -48,12 +48,7 @@ export default function SignUpPage() {
       <h1>Sign Up</h1>
       <form id="sign-up-form" onSubmit={handleSignUp}>
         <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          placeholder="Type your name..."
-        />
+        <input id="name" type="text" name="name" placeholder="Type your name..." />
         <label htmlFor="mail">Mail</label>
         <input
           id="mail"

@@ -12,7 +12,7 @@ export default function ProfilePage() {
 
   const fileInputRef = useRef(null);
 
-  const url = `https://fb-rest-race-default-rtdb.firebaseio.com/users/${auth.currentUser?.uid}.json`; // replace YOUR-FIREBASE-URL with your Firebase URL
+  const url = `${import.meta.env.VITE_FB_URL}/users/${auth.currentUser?.uid}.json`; // replace YOUR-FIREBASE-URL with your Firebase URL
 
   useEffect(() => {
     async function getUser() {
@@ -125,26 +125,13 @@ export default function ProfilePage() {
           />
 
           <label htmlFor="image-url">Image</label>
-          <input
-            type="file"
-            className="hide"
-            accept="image/*"
-            onChange={handleImageChange}
-            ref={fileInputRef}
-          />
+          <input type="file" className="hide" accept="image/*" onChange={handleImageChange} ref={fileInputRef} />
           <img
             id="image"
             className={"image-preview"}
-            src={
-              image
-                ? image
-                : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
-            }
+            src={image ? image : "https://placehold.co/600x400?text=Click+here+to+select+an+image"}
             alt="Choose"
-            onError={e =>
-              (e.target.src =
-                "https://placehold.co/600x400?text=Error+loading+image")
-            }
+            onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
             onClick={() => fileInputRef.current.click()}
           />
           <div className="error-message">

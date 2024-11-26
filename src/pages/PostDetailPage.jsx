@@ -6,7 +6,7 @@ import { auth } from "../firebase-config";
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
   const params = useParams();
-  const url = `https://fb-rest-race-default-rtdb.firebaseio.com/posts/${params.id}.json`;
+  const url = `${import.meta.env.VITE_FB_URL}/posts/${params.id}.json`;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,9 +25,7 @@ export default function PostDetailPage() {
   }
 
   async function handleDelete() {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
+    const shouldDelete = window.confirm("Are you sure you want to delete this post?");
 
     if (shouldDelete) {
       const response = await fetch(url, {
