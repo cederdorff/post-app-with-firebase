@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PostCard from "./../components/PostCard";
 import { auth } from "../firebase-config";
+import Loader from "../components/Loader";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
   const params = useParams();
   const url = `${import.meta.env.VITE_FB_URL}/posts/${params.id}.json`;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getPost() {
@@ -28,6 +30,7 @@ export default function PostDetailPage() {
     const shouldDelete = window.confirm("Are you sure you want to delete this post?");
 
     if (shouldDelete) {
+      setIsLoading(true);
       const response = await fetch(url, {
         method: "DELETE"
       });
@@ -37,6 +40,7 @@ export default function PostDetailPage() {
       } else {
         alert("Something went wrong");
       }
+      setIsLoading(false);
     }
   }
 
@@ -55,6 +59,7 @@ export default function PostDetailPage() {
           </div>
         )}
       </div>
+      <Loader show={isLoading} />
     </section>
   );
 }

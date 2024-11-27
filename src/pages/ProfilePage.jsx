@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
 import UserPosts from "../components/UserPosts";
+import Loader from "../components/Loader";
 
 export default function ProfilePage() {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ export default function ProfilePage() {
   const [mail, setMail] = useState("");
   const [image, setImage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const fileInputRef = useRef(null);
 
@@ -25,12 +27,14 @@ export default function ProfilePage() {
         setMail(data.mail);
         setImage(data.image);
       }
+      setIsLoading(false);
     }
     getUser();
   }, [url]);
 
   async function handleSaveUser(event) {
     event.preventDefault();
+    setIsLoading(true);
 
     const user = {
       name,
@@ -47,6 +51,7 @@ export default function ProfilePage() {
     if (!response.ok) {
       setErrorMessage("Sorry, something went wrong. Please try again.");
     }
+    setIsLoading(false);
   }
 
   /**
@@ -149,6 +154,7 @@ export default function ProfilePage() {
       </div>
       <h2>Posts</h2>
       <UserPosts uid={auth.currentUser?.uid} />
+      <Loader show={isLoading} />
     </section>
   );
 }
