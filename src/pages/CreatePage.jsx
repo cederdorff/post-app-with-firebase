@@ -6,6 +6,10 @@ export default function CreatePage() {
 
   async function createPost(post) {
     post.uid = auth.currentUser.uid;
+    // Add the createdAt property to the post object - must be a timestamp
+    post.createdAt = Date.now();
+
+    console.log(post);
 
     const response = await fetch(`${import.meta.env.VITE_FB_URL}/posts.json`, {
       method: "POST",
