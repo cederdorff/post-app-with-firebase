@@ -43,7 +43,7 @@ export default function HomePage() {
     <section className="page">
       <form className="grid-filter" id="search-form" role="search">
         <label>
-          Serach by caption{" "}
+          Search by caption{" "}
           <input
             aria-label="Search by caption"
             defaultValue={searchQuery}
