@@ -1,16 +1,10 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc"; // this on might be "import react from "@vitejs/plugin-react";" in your solution
+import react from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
-  const config = {
+  return {
     plugins: [react()],
-    base: "/"
+    base: command === "serve" ? "/" : "/post-app-with-firebase/"
   };
-
-  if (command !== "serve") {
-    config.base = "/post-app-with-firebase/";
-  }
-
-  return config;
 });
