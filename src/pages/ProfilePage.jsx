@@ -14,7 +14,7 @@ export default function ProfilePage() {
 
   const fileInputRef = useRef(null);
 
-  const url = `${import.meta.env.VITE_FB_URL}/users/${auth.currentUser?.uid}.json`; // replace YOUR-FIREBASE-URL with your Firebase URL
+  const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/users/${auth.currentUser?.uid}.json`; // replace YOUR-FIREBASE-URL with your Firebase URL
 
   useEffect(() => {
     async function getUser() {

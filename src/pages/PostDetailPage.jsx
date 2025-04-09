@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
   const params = useParams();
-  const url = `${import.meta.env.VITE_FB_URL}/posts/${params.id}.json`;
+  const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts/${params.id}.json`;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 

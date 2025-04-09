@@ -5,9 +5,7 @@ export default function UserAvatar({ uid }) {
 
   useEffect(() => {
     async function getUser() {
-      const response = await fetch(
-        `${import.meta.env.VITE_FB_URL}/users/${uid}.json`
-      );
+      const response = await fetch(`${import.meta.env.VITE_FIREBASE_DATABASE_URL}/users/${uid}.json`);
       const data = await response.json();
       if (data) {
         setUser(data); // set the user state with the data from firebase
@@ -18,10 +16,7 @@ export default function UserAvatar({ uid }) {
 
   return (
     <div className="avatar">
-      <img
-        src={user?.image || "https://placehold.co/50x50.webp"}
-        alt={user?.name}
-      />
+      <img src={user?.image || "https://placehold.co/50x50.webp"} alt={user?.name} />
       <span>
         <h3>{user?.name}</h3>
         <p>{user?.title}</p>

@@ -6,7 +6,7 @@ export default function UserPosts({ uid }) {
 
   useEffect(() => {
     async function getPosts() {
-      const url = `${import.meta.env.VITE_FB_URL}/posts.json?orderBy="uid"&equalTo="${uid}"`;
+      const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts.json?orderBy="uid"&equalTo="${uid}"`;
       // To make this work, you must create an index on "uid" in Firebase Realtime Database Rules
       const response = await fetch(url);
       const data = await response.json();

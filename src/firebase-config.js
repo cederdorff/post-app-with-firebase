@@ -2,15 +2,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; // for authentication
 
-// Your web app's Firebase configuration
+// Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBOgT4lU4nUb7f8iHUY7fe7rsTRLF8f4oY",
-  authDomain: "fb-rest-race.firebaseapp.com",
-  databaseURL: "https://fb-rest-race-default-rtdb.firebaseio.com",
-  projectId: "fb-rest-race",
-  storageBucket: "fb-rest-race.appspot.com",
-  messagingSenderId: "950177214357",
-  appId: "1:950177214357:web:58ed1a1856a23f808f109c"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

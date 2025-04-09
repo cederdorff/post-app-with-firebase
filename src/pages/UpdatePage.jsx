@@ -5,7 +5,7 @@ import PostForm from "../components/PostForm";
 export default function UpdatePage() {
   const [post, setPost] = useState({});
   const params = useParams();
-  const url = `${import.meta.env.VITE_FB_URL}/posts/${params.id}.json`;
+  const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts/${params.id}.json`;
   const navigate = useNavigate();
 
   useEffect(() => {

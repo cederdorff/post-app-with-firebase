@@ -30,7 +30,7 @@ export default function SignUpPage() {
   }
 
   async function createUser(uid, name, mail) {
-    const url = `${import.meta.env.VITE_FB_URL}/users/${uid}.json`;
+    const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/users/${uid}.json`;
     const response = await fetch(url, {
       method: "PUT",
       body: JSON.stringify({ name, mail })

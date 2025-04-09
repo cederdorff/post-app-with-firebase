@@ -11,7 +11,7 @@ export default function CreatePage() {
 
     console.log(post);
 
-    const response = await fetch(`${import.meta.env.VITE_FB_URL}/posts.json`, {
+    const response = await fetch(`${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts.json`, {
       method: "POST",
       body: JSON.stringify(post)
     });
