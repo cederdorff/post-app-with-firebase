@@ -2,39 +2,47 @@
 name: Deploy static content to Pages
 
 on:
+  # Trigger the workflow on push to the main branch or manual dispatch
   push:
     branches: ["main"]
   workflow_dispatch:
 
 permissions:
+  # Grant necessary permissions for deploying to GitHub Pages
   contents: read
   pages: write
   id-token: write
 
 concurrency:
+  # Ensure only one deployment runs at a time
   group: "pages"
   cancel-in-progress: true
 
 jobs:
   deploy:
     environment:
+      # Set the environment to GitHub Pages
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        # Check out the repository code
         uses: actions/checkout@v4
 
       - name: Set up Node
+        # Set up Node.js environment with caching for dependencies
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
 
       - name: Install dependencies
+        # Install project dependencies using npm
         run: npm install
 
       - name: Build with environment variables
+        # Build the Vite app with Firebase environment variables
         env:
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -43,17 +51,21 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+        # Copy index.html to 404.html to handle routing for single-page apps
         run: npm run build && cp ./dist/index.html ./dist/404.html
 
       - name: Setup Pages
+        # Configure GitHub Pages for deployment
         uses: actions/configure-pages@v3
 
       - name: Upload artifact manually (v4 workaround)
+        # Upload the build output (dist folder) as an artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: ./dist
 
       - name: Deploy to GitHub Pages
+        # Deploy the uploaded artifact to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
