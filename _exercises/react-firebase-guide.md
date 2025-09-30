@@ -252,7 +252,10 @@ async function getPosts() {
     console.log("Posts array:", postsArray);
     setPosts(postsArray);
 }
-```</details>
+```
+
+</details>
+
 
 💡 **Spread operator forklaring:** `...data[key]` tager alle properties fra post objektet og "spreder" dem ind i det nye objekt.
 
@@ -379,23 +382,25 @@ export default function HomePage() {
 
 #### 3.9 Ekstraktér til PostCard komponent
 
-#### 3.2 Test dit setup
+For bedre code organisation skal vi ekstrahere post visningen til en separat komponent.
 
-- Check browser developer tools console
-- Se om `postsArray` indeholder data
-- Hvis ikke, dobbelcheck din Firebase URL
+**Opgave:** Opret `components/PostCard.jsx`:
 
-💡 **Object.keys() forklaring:** Firebase gemmer data som objekter med auto-genererede keys. Vi konverterer til array så vi kan bruge `.map()`.
+- Modtag `post` som prop
+- Returnér article med post data
+- Vis UserAvatar, billede og caption
 
-#### 3.3 Ekstraktér til PostCard komponent
-
-Opret `components/PostCard.jsx`:
+<details>
+<summary>🔍 Se løsning</summary>
 
 ```jsx
 // 📁 components/PostCard.jsx
+import UserAvatar from "./UserAvatar";
+
 export default function PostCard({ post }) {
   return (
     <article className="post-card">
+      <UserAvatar uid={post.uid} />
       <img src={post.image} alt={post.caption} />
       <h2>{post.caption}</h2>
     </article>
@@ -403,7 +408,9 @@ export default function PostCard({ post }) {
 }
 ```
 
-Opdatér `HomePage.jsx` til at bruge komponenten:
+</details>
+
+**Opdatér HomePage.jsx** til at bruge komponenten:
 
 ```jsx
 // I HomePage.jsx
@@ -415,7 +422,13 @@ import PostCard from "../components/PostCard";
 }
 ```
 
-💡 **Hvorfor key={post.id}?** React bruger keys til at identificere komponenter når listen ændres.
+💡 **Hvorfor key={post.id}?** React bruger keys til at identificiere komponenter når listen ændres.
+
+**Test din løsning:**
+
+- Kan du se alle posts med user avatars?
+- Vises billeder og captions korrekt?
+- Er komponent koden nu mere organiseret?
 
 ---
 
