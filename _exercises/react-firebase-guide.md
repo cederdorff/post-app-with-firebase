@@ -236,26 +236,25 @@ Nu har du set Firebase data strukturen. Tid til at konvertere den.
 <details>
 <summary>🔍 Se løsning</summary>
 
-````jsx
+```jsx
 async function getPosts() {
-    // UDSKIFT [dit-projekt-navn] med dit faktiske Firebase projekt navn!
-    const url = "https://[dit-projekt-navn]-default-rtdb.firebaseio.com/posts.json";
-    const response = await fetch(url);
-    const data = await response.json();
+  // UDSKIFT [dit-projekt-navn] med dit faktiske Firebase projekt navn!
+  const url = "https://[dit-projekt-navn]-default-rtdb.firebaseio.com/posts.json";
+  const response = await fetch(url);
+  const data = await response.json();
 
-    // Fra objekt til array
-    const postsArray = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-    }));
+  // Fra objekt til array
+  const postsArray = Object.keys(data).map(key => ({
+    id: key,
+    ...data[key]
+  }));
 
-    console.log("Posts array:", postsArray);
-    setPosts(postsArray);
+  console.log("Posts array:", postsArray);
+  setPosts(postsArray);
 }
 ```
 
 </details>
-
 
 💡 **Spread operator forklaring:** `...data[key]` tager alle properties fra post objektet og "spreder" dem ind i det nye objekt.
 
@@ -283,7 +282,7 @@ return (
     ))}
   </section>
 );
-````
+```
 
 </details>
 
