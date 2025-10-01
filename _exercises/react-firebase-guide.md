@@ -47,13 +47,90 @@ Efter denne guide kan du:
 
 ## Del 1: Grundlæggende Setup
 
-### 0. Project Template
+### 0. Project Template - Start med React Vite SPA
 
-- Sørg for at have en fungerende React SPA template med React Router
-- Du kan bruge [react-vite-spa](https://github.com/cederdorff/react-vite-spa) som template
-- Hvis du bruger GitHub template, kør `npm install` for at installere dependencies
+For at sikre at alle starter fra det samme udgangspunkt, skal vi bruge det specifikke React template.
 
-💡 **Tip:** Check at din development server virker (at dit projekt virker) med `npm run dev`
+#### 0.1 Brug GitHub Template
+
+**Opgave:** Gå til [react-vite-spa template](https://github.com/cederdorff/react-vite-spa) og opret dit eget projekt:
+
+1. **Klik "Use this template"** knappen på GitHub
+2. **Vælg "Create a new repository"**
+3. **Giv dit repository et navn** (f.eks. "min-post-app")
+4. **Sæt til Public eller Private** efter eget ønske
+5. **Klik "Create repository"**
+
+💡 **Hvorfor template?** Det giver dig React Router, folder struktur og basic setup automatisk.
+
+#### 0.2 Clone og installer
+
+**Opgave:** Download dit nye projekt til din computer:
+
+```bash
+# Clone dit nye repository (udskift med dit repository URL)
+git clone https://github.com/[dit-github-navn]/[dit-repository-navn].git
+
+# Gå ind i mappen
+cd [dit-repository-navn]
+
+# Installer dependencies
+npm install
+```
+
+**Test dit setup:**
+
+```bash
+# Start development server
+npm run dev
+```
+
+Du skulle nu se en fungerende React app på `http://localhost:5173` med navigation mellem Home og About sider.
+
+#### 0.3 Bekræft projektet virker
+
+**Tjek at følgende fungerer:**
+
+- ✅ React app starter uden fejl
+- ✅ Navigation mellem sider virker
+- ✅ Du kan se "Home" og "About" sider
+- ✅ Hot reload virker (prøv at ændre noget tekst)
+
+**Folder struktur du skulle have:**
+
+```
+dit-projekt/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   │   ├── HomePage.jsx
+│   │   └── AboutPage.jsx
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+└── vite.config.js
+```
+
+💡 **Hvis noget ikke virker:** Stop serveren (Ctrl+C) og kør `npm install` igen.
+
+#### 0.4 Forbered til Firebase integration
+
+**Opgave:** Nu er dit projekt klar til at tilføje Firebase funktionalitet. I næste step sætter vi Firebase op.
+
+**Hvad har vi nu:**
+
+- ✅ React med Vite (hurtig development)
+- ✅ React Router (navigation mellem sider)
+- ✅ Grundlæggende folder struktur
+- ✅ Pages og components adskilt
+
+**Hvad kommer næst:**
+
+- Firebase database setup
+- REST API calls
+- CRUD operationer
+
+⚠️ **Vigtigt:** Sørg for at dit projekt kører uden fejl før du går videre!
 
 ---
 
@@ -808,7 +885,7 @@ Før vi bygger vores create form, lad os forstå grundprincipperne:
 ```jsx
 // 📁 pages/CreatePage.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function CreatePage() {
   const [caption, setCaption] = useState("");
@@ -1106,7 +1183,7 @@ Når alle steps er gennemført, skulle din komponent se sådan ud:
 ```jsx
 // 📁 pages/CreatePage.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function CreatePage() {
   const [caption, setCaption] = useState("");
@@ -1285,7 +1362,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 
 ```jsx
 // 📁 pages/PostDetailPage.jsx
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function PostDetailPage() {
   const params = useParams();
@@ -1328,7 +1405,7 @@ Nu skal vi gøre det muligt at klikke på posts for at gå til detail siden.
 
 ```jsx
 // 📁 components/PostCard.jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import UserAvatar from "./UserAvatar";
 
 export default function PostCard({ post }) {
@@ -1373,7 +1450,7 @@ Nu skal vi hente den specifikke post data.
 
 ```jsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
@@ -1505,7 +1582,7 @@ Nu skal vi tilføje handlingsknapper til detail siden.
 <summary>🔍 Se løsning</summary>
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function PostDetailPage() {
   const navigate = useNavigate();
@@ -1591,7 +1668,7 @@ Når alle steps er gennemført, skulle din komponent se sådan ud:
 ```jsx
 // 📁 pages/PostDetailPage.jsx
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import PostCard from "../components/PostCard";
 
 export default function PostDetailPage() {
@@ -1733,7 +1810,7 @@ Før vi bygger komponenten, lad os teste navigation.
 
 ```jsx
 // 📁 pages/UpdatePage.jsx
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function UpdatePage() {
   const params = useParams();
@@ -1777,7 +1854,7 @@ Nu skal vi tilføje state til at håndtere form input.
 
 ```jsx
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function UpdatePage() {
   const [caption, setCaption] = useState("");
@@ -1819,7 +1896,7 @@ Nu skal vi hente den eksisterende post data og pre-udfylde formen.
 
 ```jsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function UpdatePage() {
   const [caption, setCaption] = useState("");
@@ -1899,7 +1976,7 @@ Nu skal vi hente den eksisterende post data og pre-udfylde formen.
 ```jsx
 // 📁 pages/UpdatePage.jsx
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 export default function UpdatePage() {
   const [caption, setCaption] = useState("");
@@ -2034,7 +2111,7 @@ Nu skal vi implementere submit og cancel funktionalitet.
 <summary>🔍 Se løsning</summary>
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function UpdatePage() {
   // ... existing state
@@ -2215,7 +2292,7 @@ Når alle steps er gennemført, skulle din komponent se sådan ud:
 ```jsx
 // � pages/UpdatePage.jsx
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 
 export default function UpdatePage() {
   const [caption, setCaption] = useState("");
@@ -2721,7 +2798,7 @@ export default function PostForm({ savePost, post }) {
 ```jsx
 // 📁 pages/CreatePage.jsx
 import PostForm from "../components/PostForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function CreatePage() {
   const navigate = useNavigate();
@@ -2760,7 +2837,7 @@ export default function CreatePage() {
 ```jsx
 // 📁 pages/UpdatePage.jsx
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import PostForm from "../components/PostForm";
 
 export default function UpdatePage() {
