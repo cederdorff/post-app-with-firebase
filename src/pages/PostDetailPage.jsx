@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import PostCard from "./../components/PostCard";
 import { auth } from "../firebase-config";
 import Loader from "../components/Loader";

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import PostForm from "../components/PostForm";
 import { auth } from "../firebase-config";
 export default function CreatePage() {

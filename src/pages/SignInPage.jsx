@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { auth } from "../firebase-config";
 
 export default function SignInPage() {
@@ -29,14 +29,7 @@ export default function SignInPage() {
       <h1>Sign In</h1>
       <form id="sign-in-form" onSubmit={handleSignIn}>
         <label htmlFor="mail">Mail</label>
-        <input
-          id="mail"
-          type="email"
-          name="mail"
-          aria-label="mail"
-          placeholder="Type your mail..."
-          required
-        />
+        <input id="mail" type="email" name="mail" aria-label="mail" placeholder="Type your mail..." required />
         <label htmlFor="password">Password</label>
         <input
           id="password"
