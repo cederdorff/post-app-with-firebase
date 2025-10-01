@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import PostCard from "./../components/PostCard";
 
 export default function PostDetailPage() {
@@ -24,9 +24,7 @@ export default function PostDetailPage() {
   }
 
   async function handleDelete() {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
+    const shouldDelete = window.confirm("Are you sure you want to delete this post?");
 
     if (shouldDelete) {
       const response = await fetch(url, {

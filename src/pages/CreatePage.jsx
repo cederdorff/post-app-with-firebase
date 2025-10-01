@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 export default function CreatePage() {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
@@ -10,13 +10,10 @@ export default function CreatePage() {
 
     const post = { caption, image, uid: "ZfPTVEMQKf9vhNiUh0bj" };
 
-    const response = await fetch(
-      "https://fb-rest-race-default-rtdb.firebaseio.com/posts.json",
-      {
-        method: "POST",
-        body: JSON.stringify(post)
-      }
-    );
+    const response = await fetch("https://fb-rest-race-default-rtdb.firebaseio.com/posts.json", {
+      method: "POST",
+      body: JSON.stringify(post)
+    });
 
     if (response.ok) {
       navigate("/");
@@ -53,16 +50,9 @@ export default function CreatePage() {
           <img
             id="image-preview"
             className="image-preview"
-            src={
-              image
-                ? image
-                : "https://placehold.co/600x400?text=Paste+an+image+URL"
-            }
+            src={image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"}
             alt="Choose"
-            onError={e =>
-              (e.target.src =
-                "https://placehold.co/600x400?text=Error+loading+image")
-            }
+            onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
           />
           <div className="btns">
             <button>Save</button>

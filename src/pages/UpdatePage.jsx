@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 
 export default function UpdatePage() {
   const [caption, setCaption] = useState("");
@@ -65,16 +65,9 @@ export default function UpdatePage() {
           <img
             id="image-preview"
             className="image-preview"
-            src={
-              image
-                ? image
-                : "https://placehold.co/600x400?text=Paste+an+image+URL"
-            }
+            src={image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"}
             alt="Choose"
-            onError={e =>
-              (e.target.src =
-                "https://placehold.co/600x400?text=Error+loading+image")
-            }
+            onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
           />
           <div className="btns">
             <button>Save</button>
