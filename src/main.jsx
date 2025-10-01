@@ -6,8 +6,7 @@ import { BrowserRouter } from "react-router";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter
-      basename={import.meta.env.DEV ? "/" : "/post-app-with-firebase/"}>
+    <BrowserRouter basename={import.meta.env.DEV ? "/" : "/post-app-with-firebase/"}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
