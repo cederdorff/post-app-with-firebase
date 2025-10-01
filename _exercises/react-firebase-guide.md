@@ -387,19 +387,16 @@ For bedre code organisation skal vi ekstrahere post visningen til en separat kom
 
 - Modtag `post` som prop
 - Returnér article med post data
-- Vis UserAvatar, billede og caption
+- Vis billede og caption (UserAvatar kommer i næste sektion)
 
 <details>
 <summary>🔍 Se løsning</summary>
 
 ```jsx
 // 📁 components/PostCard.jsx
-import UserAvatar from "./UserAvatar";
-
 export default function PostCard({ post }) {
   return (
     <article className="post-card">
-      <UserAvatar uid={post.uid} />
       <img src={post.image} alt={post.caption} />
       <h2>{post.caption}</h2>
     </article>
@@ -425,9 +422,11 @@ import PostCard from "../components/PostCard";
 
 **Test din løsning:**
 
-- Kan du se alle posts med user avatars?
+- Kan du se alle posts?
 - Vises billeder og captions korrekt?
 - Er komponent koden nu mere organiseret?
+
+💡 **Note:** I næste sektion tilføjer vi UserAvatar til PostCard komponenten.
 
 ---
 
