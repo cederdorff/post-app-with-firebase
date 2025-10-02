@@ -151,6 +151,7 @@ form {
 #sign-in-form,
 #sign-up-form {
   width: 35rem;
+  max-width: 100%;
 }
 
 /* ---------- Button Group ---------- */
