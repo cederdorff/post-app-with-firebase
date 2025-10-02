@@ -74,7 +74,7 @@ export default function PostForm({ savePost, post }) {
   }
 
   async function uploadImage(imageFile) {
-    const firebaseProjectId = "fb-rest-race"; // replace with your own firebase project id
+    const firebaseProjectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
     const url = `https://firebasestorage.googleapis.com/v0/b/${firebaseProjectId}.appspot.com/o/${imageFile.name}`;
     // POST request to upload image
     const response = await fetch(url, {
@@ -108,26 +108,13 @@ export default function PostForm({ savePost, post }) {
           className={isCaptionError ? "error" : ""}
         />
         <label htmlFor="image-url">Image</label>
-        <input
-          type="file"
-          className="hide"
-          accept="image/*"
-          onChange={handleImageChange}
-          ref={fileInputRef}
-        />
+        <input type="file" className="hide" accept="image/*" onChange={handleImageChange} ref={fileInputRef} />
         <img
           id="image"
           className={isImageError ? "error image-preview" : "image-preview"}
-          src={
-            image
-              ? image
-              : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
-          }
+          src={image ? image : "https://placehold.co/600x400?text=Click+here+to+select+an+image"}
           alt="Choose"
-          onError={e =>
-            (e.target.src =
-              "https://placehold.co/600x400?text=Error+loading+image")
-          }
+          onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
           onClick={() => fileInputRef.current.click()}
         />
 

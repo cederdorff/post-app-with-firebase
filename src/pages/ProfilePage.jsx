@@ -72,7 +72,7 @@ export default function ProfilePage() {
   }
 
   async function uploadImage(imageFile) {
-    const firebaseProjectId = "YOUR-FIREBASE-PROJECT-ID"; // replace with your own firebase project id
+    const firebaseProjectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
     const url = `https://firebasestorage.googleapis.com/v0/b/${firebaseProjectId}.appspot.com/o/${imageFile.name}`;
     // POST request to upload image
     const response = await fetch(url, {
