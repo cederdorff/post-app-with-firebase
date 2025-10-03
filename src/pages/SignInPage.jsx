@@ -26,7 +26,7 @@ export default function SignInPage() {
   }
   return (
     <section id="sign-in-page" className="page">
-      <h1>Sign In</h1>
+      <h1>Login</h1>
       <form id="sign-in-form" onSubmit={handleSignIn}>
         <label htmlFor="mail">Mail</label>
         <input id="mail" type="email" name="mail" aria-label="mail" placeholder="Type your mail..." required />
