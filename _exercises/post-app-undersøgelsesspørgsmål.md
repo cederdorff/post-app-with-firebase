@@ -95,7 +95,7 @@ const params = useParams();
 - Hvor kommer id'et fra? (hint: se URL'en)
 - Hvordan hentes den eksisterende post data?
 
-### PATCH metode
+### HTTP metode
 
 **Find funktionen der sender opdateringen til Firebase**
 
