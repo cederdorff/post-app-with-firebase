@@ -45,7 +45,7 @@ export default function SignUpPage() {
 
   return (
     <section id="sign-up-page" className="page">
-      <h1>Sign Up</h1>
+      <h1>Sign Up - hej med dig</h1>
       <form id="sign-up-form" onSubmit={handleSignUp}>
         <label htmlFor="name">Name</label>
         <input id="name" type="text" name="name" placeholder="Type your name..." />
