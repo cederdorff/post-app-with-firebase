@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
 import PostCard from "./PostCard";
+import { getUserPosts } from "../services/firestoreService";
 
 export default function UserPosts({ uid }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    async function getPosts() {
-      const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts.json?orderBy="uid"&equalTo="${uid}"`;
-      // To make this work, you must create an index on "uid" in Firebase Realtime Database Rules
-      const response = await fetch(url);
-      const data = await response.json();
-      const postsArray = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-      })); // from object to array
-      setPosts(postsArray);
+    let mounted = true;
+    async function load() {
+      try {
+        const userPosts = await getUserPosts(uid);
+        if (mounted) setPosts(userPosts);
+      } catch (err) {
+        console.error("Failed to load user posts", err);
+      }
     }
-    if (uid) {
-      getPosts();
-    }
+    if (uid) load();
+    return () => (mounted = false);
   }, [uid]);
   return (
     <section className="grid">

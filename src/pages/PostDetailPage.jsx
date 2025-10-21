@@ -2,25 +2,29 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PostCard from "./../components/PostCard";
 import { auth } from "../firebase-config";
+import { getPostById, deletePost } from "../services/firestoreService";
 import Loader from "../components/Loader";
 
 export default function PostDetailPage() {
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
   const params = useParams();
-  const url = `${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts/${params.id}.json`;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function getPost() {
-      const response = await fetch(url);
-      const postData = await response.json();
-      postData.id = params.id;
-      setPost(postData);
+    let mounted = true;
+    async function load() {
+      try {
+        const p = await getPostById(params.id);
+        if (mounted) setPost(p);
+      } catch (err) {
+        console.error("Failed to load post", err);
+      }
     }
 
-    getPost();
-  }, [params.id, url]);
+    load();
+    return () => (mounted = false);
+  }, [params.id]);
 
   function navigateToUpdate() {
     navigate(`/posts/${params.id}/update`);
@@ -31,13 +35,10 @@ export default function PostDetailPage() {
 
     if (shouldDelete) {
       setIsLoading(true);
-      const response = await fetch(url, {
-        method: "DELETE"
-      });
-
-      if (response.ok) {
+      try {
+        await deletePost(params.id);
         navigate("/");
-      } else {
+      } catch (err) {
         alert("Something went wrong");
       }
       setIsLoading(false);
@@ -47,8 +48,14 @@ export default function PostDetailPage() {
   return (
     <section className="page" id="post-page">
       <div className="container">
-        <h1>{post.caption}</h1>
-        <PostCard post={post} />
+        {post ? (
+          <>
+            <h1>{post.caption}</h1>
+            <PostCard post={post} />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
 
         {auth.currentUser?.uid === post.uid && (
           <div className="btns">

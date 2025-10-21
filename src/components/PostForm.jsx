@@ -3,7 +3,9 @@ import Loader from "./Loader";
 
 export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
+  // `image` holds the image URL if present; `imageFile` holds the raw File when selected
   const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isCaptionError, setIsCaptionError] = useState(false);
   const [isImageError, setIsImageError] = useState(false);
@@ -48,8 +50,8 @@ export default function PostForm({ savePost, post }) {
     setIsImageError(false);
 
     const formData = { caption, image };
-    // ... send formData to API or parent component
-    savePost(formData); // <-- pass formData to parent component
+    // pass imageFile separately so caller can upload to Storage
+    savePost(formData, imageFile); // <-- pass formData and raw file to parent
   }
 
   /**
@@ -59,39 +61,24 @@ export default function PostForm({ savePost, post }) {
   async function handleImageChange(event) {
     setIsLoading(true); // set isLoading state to true
     const file = event.target.files[0]; // get the first file in the array
-    if (file.size < 500000) {
-      // if file size is below 0.5MB
-      const imageUrl = await uploadImage(file); // call the uploadImage function
-      setImage(imageUrl); // set the image state with the image URL
-      setErrorMessage(""); // reset errorMessage state
-      setIsImageError(false); // reset isImageError state
+    if (!file) return;
+    if (file.size < 5000000) {
+      // accept files up to ~5MB
+      setImageFile(file);
+      // show a local preview while upload happens on form submit
+      const reader = new FileReader();
+      reader.onload = e => setImage(e.target.result);
+      reader.readAsDataURL(file);
+      setErrorMessage("");
+      setIsImageError(false);
     } else {
-      // if not below 0.5MB display an error message using the errorMessage state
       setErrorMessage("The image file is too big!");
-      setIsImageError(true); // set isImageError to true
+      setIsImageError(true);
     }
-    setTimeout(() => setIsLoading(false), 500); // set isLoading state to false after 500ms
+    setTimeout(() => setIsLoading(false), 300); // set isLoading state to false after preview
   }
 
-  async function uploadImage(imageFile) {
-    const firebaseProjectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
-    const url = `https://firebasestorage.googleapis.com/v0/b/${firebaseProjectId}.appspot.com/o/${imageFile.name}`;
-    // POST request to upload image
-    const response = await fetch(url, {
-      method: "POST",
-      body: imageFile,
-      headers: { "Content-Type": imageFile.type }
-    });
-
-    if (!response.ok) {
-      setErrorMessage("Upload image failed"); // set errorMessage state with error message
-      setIsImageError(true); // set isImageError to true
-      throw new Error("Upload image failed"); // throw an error
-    }
-
-    const imageUrl = `${url}?alt=media`; // get the image URL
-    return imageUrl; // return the image URL
-  }
+  // Note: actual upload happens in the parent via `savePost(formData, imageFile)`
 
   return (
     <>

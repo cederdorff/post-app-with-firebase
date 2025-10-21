@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import { subscribeToPosts } from "../services/firestoreService";
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]); // set the initial state to an empty array
@@ -8,19 +9,9 @@ export default function HomePage() {
 
   // Fetch data from the API
   useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch(`${import.meta.env.VITE_FIREBASE_DATABASE_URL}/posts.json`); // fetch data from the url
-      const data = await response.json(); // get the data from the response and parse it
-      // from object to array
-      const postsArray = Object.keys(data).map(postId => ({
-        id: postId,
-        ...data[postId]
-      })); // map the data to an array of objects
-
-      setPosts(postsArray); // set the posts state with the postsArray
-    }
-
-    fetchPosts();
+    // subscribeToPosts provides realtime updates; it returns an unsubscribe function
+    const unsubscribe = subscribeToPosts(newPosts => setPosts(newPosts));
+    return () => unsubscribe();
   }, []);
 
   // Filter posts based on the search query
