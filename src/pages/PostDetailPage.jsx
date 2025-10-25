@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import PostCard from "./../components/PostCard";
 import { auth } from "../firebase-config";
 import Loader from "../components/Loader";
+import { getPostById } from "../helpers";
 
 export default function PostDetailPage() {
   const [post, setPost] = useState({});
@@ -12,15 +13,8 @@ export default function PostDetailPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function getPost() {
-      const response = await fetch(url);
-      const postData = await response.json();
-      postData.id = params.id;
-      setPost(postData);
-    }
-
-    getPost();
-  }, [params.id, url]);
+    getPostById(params.id).then(fetchedPost => setPost(fetchedPost));
+  }, [params.id]);
 
   function navigateToUpdate() {
     navigate(`/posts/${params.id}/update`);

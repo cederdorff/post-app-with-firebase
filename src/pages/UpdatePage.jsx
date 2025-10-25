@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PostForm from "../components/PostForm";
+import { getPostById } from "../helpers";
 
 export default function UpdatePage() {
   const [post, setPost] = useState({});
@@ -9,14 +10,8 @@ export default function UpdatePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getPost() {
-      const response = await fetch(url);
-      const postData = await response.json();
-      setPost(postData);
-    }
-
-    getPost();
-  }, [url]);
+    getPostById(params.id).then(fetchedPost => setPost(fetchedPost));
+  }, [params.id]);
 
   async function updatePost(postToUpdate) {
     const response = await fetch(url, {
