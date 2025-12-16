@@ -50,7 +50,7 @@ function App() {
     </Routes>
   );
 
-  // if user is authenticated, show privateRoutes, else show publicRoutes
+  // if user is authenticated, show privateRoutes - else show publicRoutes
   return <main>{isAuth ? privateRoutes : publicRoutes}</main>;
 }
 
